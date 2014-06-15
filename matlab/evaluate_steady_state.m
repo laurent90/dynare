@@ -52,7 +52,21 @@ function [ys,params,info] = evaluate_steady_state(ys_init,M,options,oo,steadysta
     end
 
     if options.ramsey_policy
-        [ys,params] = dyn_ramsey_static(ys_init,M,options,oo);
+        if steadystate_flag
+            % explicit steady state file
+            [ys] = evaluate_steady_state_file(ys_init,exo_ss,M, ...
+                                                           options);
+            [residuals,check] = evaluate_static_model(ys,exo_ss,params,M,options); %test whether it solves model
+            if max(abs(residuals(1:M.orig_endo_nbr))) > options.dynatol.f
+                info(1) = 19;
+                info(2) = residuals'*residuals;
+                return;
+            end
+        end
+        [ys,params,info] = dyn_ramsey_static(ys_init,M,options,oo);
+        if info
+           info=81; 
+        end
     elseif steadystate_flag
         % explicit steady state file
         [ys,params,info] = evaluate_steady_state_file(ys_init,exo_ss,M, ...

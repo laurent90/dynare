@@ -119,6 +119,10 @@ if ~noprint
       case 72
         error(['Calibrated covariance of the measurement errors implies correlation larger than  +-1.']);
         % Aim Code Conversions by convertAimCodeToInfo.m
+      case 81
+        error(['The solution to the static static first order conditions for optimal policy could not be found. Either the model' ...
+               ' doesn''t have a steady state, there are an infinity of steady states, ' ...
+               ' or the guess values are too far from the solution']);
       case 102
         error('Aim: roots not correctly computed by real_schur');
       case 103

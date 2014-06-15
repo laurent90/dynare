@@ -32,7 +32,6 @@ function [steady_state,params,check] = dyn_ramsey_static(x,M,options_,oo)
 % along with Dynare.  If not, see <http://www.gnu.org/licenses/>.
 
 
-steady_state = [];
 params = M.params;
 check = 0;
 options_.steadystate.nocheck = 1;
@@ -44,6 +43,9 @@ if check_static_model(oo.steady_state,M,options_,oo)
     steady_state = oo.steady_state;
     return
 elseif options_.steadystate_flag
+    exo_ss = [oo.exo_steady_state; oo.exo_det_steady_state];
+    %get starting values for instruments from steady state file
+    [oo.steady_state,params,info] = evaluate_steady_state_file(x,exo_ss,M,options_);
     k_inst = [];
     instruments = options_.instruments;
     inst_nbr = size(options_.instruments,1);
@@ -54,7 +56,7 @@ elseif options_.steadystate_flag
     if inst_nbr == 1
         inst_val = csolve(nl_func,oo.steady_state(k_inst),'',options_.solve_tolf,100);
     else
-        [inst_val,info1] = dynare_solve(nl_func,ys(k_inst),0);
+        [inst_val,check] = dynare_solve(nl_func,oo.steady_state(k_inst),0);
     end
     ys(k_inst) = inst_val;
     exo_ss = [oo.exo_steady_state oo.exo_det_steady_state];
@@ -63,7 +65,7 @@ elseif options_.steadystate_flag
 else
     n_var = M.orig_endo_nbr;
     xx = oo.steady_state(1:n_var);
-    [xx,info1] = dynare_solve(nl_func,xx,0);
+    [xx,check] = dynare_solve(nl_func,xx,0);
     [junk,junk,steady_state] = nl_func(xx);
 end
 
