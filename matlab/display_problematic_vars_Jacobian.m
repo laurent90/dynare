@@ -61,8 +61,12 @@ elseif strcmp(type,'static')
         if problemcol(ii)<=M_.orig_endo_nbr
             fprintf('Derivative of Equation %d with respect to Variable %s  (initial value of %s: %g) \n',problemrow(ii),deblank(M_.endo_names(problemcol(ii),:)),deblank(M_.endo_names(problemcol(ii),:)),x(problemcol(ii)))
         else %auxiliary vars
-            orig_var_index=M_.aux_vars(1,problemcol(ii)-M_.orig_endo_nbr).orig_index;
-            fprintf('Derivative of Equation %d with respect to Variable %s  (initial value of %s: %g) \n',problemrow(ii),deblank(M_.endo_names(orig_var_index,:)),deblank(M_.endo_names(orig_var_index,:)),x(problemcol(ii)))            
+            if M_.aux_vars(1,problemcol(ii)-M_.orig_endo_nbr).type ==6 %Ramsey Lagrange Multiplier 
+                fprintf('Langrange multiplier of equation %s (initial value: %g) \n',M_.aux_vars(1,problemcol(ii)-M_.orig_endo_nbr).eq_nbr,x(problemcol(ii)))            
+            else
+                orig_var_index=M_.aux_vars(1,problemcol(ii)-M_.orig_endo_nbr).orig_index;
+                fprintf('Derivative of Equation %d with respect to Variable %s  (initial value of %s: %g) \n',problemrow(ii),deblank(M_.endo_names(orig_var_index,:)),deblank(M_.endo_names(orig_var_index,:)),x(problemcol(ii)))            
+            end
         end
     end
     fprintf('\n%s  The problem most often occurs, because a variable with\n',caller_string)
