@@ -59,7 +59,7 @@ FirstMhFile = record.KeepedDraws.FirstMhFile;
 NumberOfDraws = TotalNumberOfMhDraws-floor(options_.mh_drop*TotalNumberOfMhDraws);
 clear record;
 
-pnames=['     ';'beta ';'gamma';'norm ';'invg ';'unif ';'invg2'];
+pnames=['     ';'beta ';'gamma';'norm ';'invg ';'unif ';'invg2';'diric';'wbull'];
 header_width = row_header_width(M_,estim_params_,bayestopt_);
 hpd_interval=[num2str(options_.mh_conf_sig*100), '% HPD interval'];
 tit2 = sprintf('%-*s %12s %12s %23s %8s %12s\n',header_width,' ','prior mean','post. mean',hpd_interval,'prior','pstdev');

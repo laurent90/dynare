@@ -15,7 +15,7 @@ function [logged_prior_density, dlprior, d2lprior, info] = priordens(x, pshape, 
 %    info                  [double]  error code for index of Inf-prior parameter
 %
 
-% Copyright (C) 2003-2012 Dynare Team
+% Copyright (C) 2003-2014 Dynare Team
 %
 % This file is part of Dynare.
 %
@@ -32,8 +32,8 @@ function [logged_prior_density, dlprior, d2lprior, info] = priordens(x, pshape, 
 % You should have received a copy of the GNU General Public License
 % along with Dynare.  If not, see <http://www.gnu.org/licenses/>.
 
-persistent id1 id2 id3 id4 id5 id6
-persistent tt1 tt2 tt3 tt4 tt5 tt6
+persistent id1 id2 id3 id4 id5 id6 id7 id8
+persistent tt1 tt2 tt3 tt4 tt5 tt6 tt7 tt8
 
 info=0;
 
@@ -73,6 +73,18 @@ if nargin > 6  && initialization == 1
     id6 = find(pshape==6);
     if isempty(id6)
         tt6 = 0;
+    end
+    % Dirichlet indices.
+    tt7 = 1;
+    id7 = find(pshape==7);
+    if isempty(id7)
+        tt7 = 0;
+    end
+    % Weibull indices.
+    tt8 = 1;
+    id8 = find(pshape==8);
+    if isempty(id8)
+        tt8 = 0;
     end
     pflag = 1;
 end
@@ -164,6 +176,18 @@ if tt6
         [tmp, dlprior(id6)]=lpdfig2(x(id6)-p3(id6),p6(id6),p7(id6));
     elseif nargout == 3
         [tmp, dlprior(id6), d2lprior(id6)]=lpdfig2(x(id6)-p3(id6),p6(id6),p7(id6));
+    end
+end
+
+if tt7 %Dirichlet
+end
+
+if tt8
+    logged_prior_density = logged_prior_density + sum(lpdfweibull(x(id8),p6(id8),p7(id8)));
+    if nargout == 2,
+        [tmp, dlprior(id8)]=lpdfweibull(x(id8),p6(id8),p7(id8));
+    elseif nargout == 3
+        [tmp, dlprior(id8), d2lprior(id8)]=lpdfweibull(x(id8),p6(id8),p7(id8));
     end
 end
 

@@ -130,7 +130,7 @@ ncn = estim_params_.ncn;  % Covariance of the measurement innovations (number of
 np  = estim_params_.np ;  % Number of deep parameters.
 nx  = nvx+nvn+ncx+ncn+np; % Total number of parameters to be estimated.
 %% Set the names of the priors.
-pnames = ['     ';'beta ';'gamm ';'norm ';'invg ';'unif ';'invg2'];
+pnames = ['     ';'beta ';'gamm ';'norm ';'invg ';'unif ';'invg2';'diric';'wbull'];
 
 dr = oo_.dr;
 

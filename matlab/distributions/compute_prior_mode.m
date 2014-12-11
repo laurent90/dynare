@@ -11,6 +11,9 @@ function m = compute_prior_mode(hyperparameters,shape)
 %                                     shape=4 => Inverse Gamma (type 1) distribution,
 %                                     shape=5 => Uniform distribution,
 %                                     shape=6 => Inverse Gamma (type 2) distribution.
+%                                     shape=7 => Dirichlet distribution.
+%                                     shape=8 => Weibull distribution.
+
 %                                     
 % OUTPUTS 
 %   m       [double]    scalar or 2*1 vector, the prior mode.
@@ -79,6 +82,17 @@ switch shape
     % s  = hyperparameters(1)
     % nu = hyperparameters(2)
     m = hyperparameters(1)/(hyperparameters(2)+2) ;
+    if length(hyperparameters)>2
+        m = m + hyperparameters(3) ;
+    end
+  case 7 %Dirichlet
+        
+  case 8 %Weibull
+    if hyperparameters(2)==1
+        m = 0;
+    else
+        m = hyperparameters(1)*((hyperparameters(2)-1)/hyperparameters(2))^(1/hyperparameters(2));
+    end
     if length(hyperparameters)>2
         m = m + hyperparameters(3) ;
     end

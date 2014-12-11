@@ -76,7 +76,7 @@ bounds.ub = zeros(length(p6),1);
 
 for i=1:length(p6)
     switch pshape(i)
-      case 1
+      case 1 %beta
         if prior_trunc == 0
             bounds.lb(i) = p3(i);
             bounds.ub(i) = p4(i);
@@ -84,7 +84,7 @@ for i=1:length(p6)
             bounds.lb(i) = betainv(prior_trunc,p6(i),p7(i))*(p4(i)-p3(i))+p3(i);
             bounds.ub(i) = betainv(1-prior_trunc,p6(i),p7(i))*(p4(i)-p3(i))+p3(i);
         end
-      case 2
+      case 2 %Gamma
         if prior_trunc == 0
             bounds.lb(i) = p3(i);
             bounds.ub(i) = Inf;
@@ -101,7 +101,7 @@ for i=1:length(p6)
                 end
             end
         end
-      case 3
+      case 3 %normal distribution
         if prior_trunc == 0
             bounds.lb(i) = -Inf;
             bounds.ub(i) = Inf;
@@ -109,7 +109,7 @@ for i=1:length(p6)
             bounds.lb(i) = norminv(prior_trunc,p6(i),p7(i));
             bounds.ub(i) = norminv(1-prior_trunc,p6(i),p7(i));
         end
-      case 4
+      case 4 %inverse gamma distribution (type 1)
         if prior_trunc == 0
             bounds.lb(i) = p3(i);
             bounds.ub(i) = Inf;
@@ -126,7 +126,7 @@ for i=1:length(p6)
                 end
             end
         end
-      case 5
+      case 5 % uniform distribution
         if prior_trunc == 0
             bounds.lb(i) = p6(i);
             bounds.ub(i) = p7(i);
@@ -134,7 +134,7 @@ for i=1:length(p6)
             bounds.lb(i) = p6(i)+(p7(i)-p6(i))*prior_trunc;
             bounds.ub(i) = p7(i)-(p7(i)-p6(i))*prior_trunc;
         end
-      case 6
+      case 6 % inverse gamma distribution (type 2)
         if prior_trunc == 0
             bounds.lb(i) = p3(i);
             bounds.ub(i) = Inf;
@@ -150,6 +150,15 @@ for i=1:length(p6)
                     rethrow(lasterror)
                 end
             end
+        end
+      case 7 %Dirichlet
+      case 8 %Weibull
+        if prior_trunc == 0
+            bounds.lb(i) = p3(i);
+            bounds.ub(i) = Inf;
+        else
+            bounds.lb(i) = wblinv(prior_trunc,p6(i),p7(i))+p3(i);
+            bounds.ub(i) = wblinv(1-prior_trunc,p6(i),p7(i))+p3(i);
         end
       otherwise
         error(sprintf('prior_bounds: unknown distribution shape (index %d, type %d)', i, pshape(i)));

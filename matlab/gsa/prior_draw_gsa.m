@@ -25,7 +25,7 @@ function pdraw = prior_draw_gsa(init,rdraw)
 % Reference:
 % M. Ratto, Global Sensitivity Analysis for Macroeconomic models, MIMEO, 2006.
 
-% Copyright (C) 2012 Dynare Team
+% Copyright (C) 2012-14 Dynare Team
 %
 % This file is part of Dynare.
 %
@@ -90,6 +90,12 @@ if init
           % TO BE CHECKED
           lbcum(i) = gamcdf(1/(bounds.ub(i)-p3(i)),p7(i)/2,2/p6(i));
           ubcum(i) = gamcdf(1/(bounds.lb(i)-p3(i)),p7(i)/2,2/p6(i));
+        case 7% DIRICHLET distribution
+          % TO BE CHECKED
+        case 8% WEIBULL distribution
+          % TO BE CHECKED
+          lbcum(i) = wblcdf(bounds.lb(i)-p3(i),p6(i),p7(i));
+          ubcum(i) = wblcdf(bounds.lb(i)-p3(i),p6(i),p7(i));        
         otherwise
           % Nothing to do here.
       end
@@ -115,6 +121,11 @@ for i = 1:npar
       case 6% INV-GAMMA2 distribution  
         % TO BE CHECKED
         pdraw(:,i) =  1./gaminv(rdraw(:,i),p7(i)/2,2/p6(i))+p3(i);
+      case 7% DIRICHLET distribution  
+        % TO BE CHECKED
+      case 8% INV-GAMMA2 distribution  
+        % TO BE CHECKED
+        pdraw(:,i) =  wblinv(rdraw(:,i),p6(i),p7(i))+p3(i);
       otherwise
         % Nothing to do here.
     end
