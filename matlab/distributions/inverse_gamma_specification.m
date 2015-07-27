@@ -27,7 +27,7 @@ function [s,nu] = inverse_gamma_specification(mu,sigma,type,use_fzero_flag)
 %! @item s
 %! Positive double scalar (greater than two), first hypermarameter of the Inverse-Gamma prior.
 %! @item nu
-%! Positive double scala, second hypermarameter of the Inverse-Gamma prior.
+%! Positive double scalar, second hypermarameter of the Inverse-Gamma prior.
 %! @end table
 %! @sp 2
 %! @strong{This function is called by:}
@@ -36,15 +36,20 @@ function [s,nu] = inverse_gamma_specification(mu,sigma,type,use_fzero_flag)
 %! @sp 2
 %! @strong{This function calls:}
 %! @sp 2
-%! @strong{Remark:}
+%! @strong{Remarks:}
 %! The call to the matlab's implementation of the secant method is here for testing purpose and should not be used. This routine fails
 %! more often in finding an interval for nu containing a signe change because it expands the interval on both sides and eventually 
 %! violates  the condition nu>2.
+%!
+%! The inverse gamma II uses the parameterization with s and nu, where
+%! s=2*beta and nu=2*alpha (alpha and beta are the shape and scale parameters used by Wikipedia and Wolfram Alpha)
+%! 
+%! The inverse gamma I distribution uses the variable x^2 as the random variable instead of just x as is the case for inverse gamma II.  
 %! 
 %! @end deftypefn
 %@eod:
 
-% Copyright (C) 2003-2012 Dynare Team
+% Copyright (C) 2003-2015 Dynare Team
 %
 % This file is part of Dynare.
 %
