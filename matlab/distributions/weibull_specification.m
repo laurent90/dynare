@@ -1,8 +1,8 @@
-function [a,b] = weibull_specification(mu,sigma)
-% Computes the inverse Gamma hyperparameters from the prior mean and standard deviation.
-
+function [scale,shape] = weibull_specification(mu,sigma) % --*-- Unitary tests --*--
+% Computes the Weibull hyperparameters from the prior mean and standard deviation.
+%
 %@info:
-%! @deftypefn {Function File} {[@var{a}, @var{b} ]=} colon (@var{mu}, @var{sigma}
+%! @deftypefn {Function File} {[@var{scale}, @var{shape} ]=} colon (@var{mu}, @var{sigma}
 %! @anchor{distributions/weibull_specification}
 %! @sp 1
 %! Computes the Weibull hyperparameters from the prior mean (@var{mu}) and standard deviation (@var{sigma}).
@@ -19,9 +19,9 @@ function [a,b] = weibull_specification(mu,sigma)
 %! @strong{Outputs}
 %! @sp 1
 %! @table @ @var
-%! @item a
+%! @item scale
 %! Positive double scalar, first hypermarameter (scale) of the Weibull prior .
-%! @item b
+%! @item shape
 %! Positive double scalar, second hypermarameter (shape) of the Weibull prior.
 %! @end table
 %! @sp 2
@@ -35,7 +35,7 @@ function [a,b] = weibull_specification(mu,sigma)
 %! @end deftypefn
 %@eod:
 
-% Copyright (C) 2014 Dynare Team
+% Copyright (C) 2015 Dynare Team
 %
 % This file is part of Dynare.
 %
@@ -49,23 +49,23 @@ function [a,b] = weibull_specification(mu,sigma)
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
 %
-% You should have received a copy of the GNU General Public License
+% You should have received scale copy of the GNU General Public License
 % along with Dynare.  If not, see <http://www.gnu.org/licenses/>.
 
 check_solution_flag = 1;
-a = [];
-b = [];
+scale = [];
+shape = [];
 
 if sigma^2 < Inf
     options=optimset('MaxFunEvals',10000,'TolF',1e-10,'Display','off');
     x = fsolve(@(x)weibull_specification_error(x,mu,sigma),[mu;sigma],options);
-    a=exp(x(1));
-    b=exp(x(2));
+    scale=exp(x(1));
+    shape=exp(x(2));
     if check_solution_flag
-        if abs(mu-a*gamma(1+1/b))>1e-7
+        if abs(mu-scale*gamma(1+1/shape))>1e-7
             error('weibull_specification:: Failed in solving for the hyperparameters!');
         end
-        if abs(sigma^2-a^2*(gamma(1+2/b)-(gamma(1+1/b))^2))>1e-7
+        if abs(sigma^2-scale^2*(gamma(1+2/shape)-(gamma(1+1/shape))^2))>1e-7
             error('weibull_specification:: Failed in solving for the hyperparameters!');
         end
     end
@@ -76,13 +76,14 @@ end
 end
 
 function outvalue=weibull_specification_error(x,mu,sigma)
-    a_par=exp(x(1,:)); %make sure only positive solutions are returned
-    b_par=exp(x(2,:)); %make sure only positive solutions are returned
-    mean_gamma=a_par.*gamma(1+1./b_par);
-    variance_gamma=a_par.^2.*(gamma(1+2./b_par)-(gamma(1+1./b_par)).^2);
+    scale_par=exp(x(1,:)); %make sure only positive solutions are returned
+    shape_par=exp(x(2,:)); %make sure only positive solutions are returned
+    mean_gamma=scale_par.*gamma(1+1./shape_par);
+    variance_gamma=scale_par.^2.*(gamma(1+2./shape_par)-(gamma(1+1./shape_par)).^2);
     outvalue(1,:)=mean_gamma-mu;
     outvalue(2,:)=variance_gamma-sigma.^2;
 end
+
 %@test:1
 %$
 %$ [a1,b1] = weibull_specification(1,1)
