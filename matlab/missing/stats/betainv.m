@@ -1,4 +1,4 @@
-function inv = betainv (x, a, b)
+function inv = betainv (x, a, b) % --*-- Unitary tests --*--
 % BETAINV  Quantile function of the Beta distribution
 %  INV = betainv(X, A, B) computes, for each element of X, the
 %  quantile (the inverse of the CDF) at X of the Beta distribution
@@ -10,7 +10,7 @@ function inv = betainv (x, a, b)
 % Original author: KH <Kurt.Hornik@wu-wien.ac.at>
 
 % Copyright (C) 1995, 1996, 1997, 2005, 2006, 2007 Kurt Hornik
-% Copyright (C) 2008-2009 Dynare Team
+% Copyright (C) 2008-2015 Dynare Team
 %
 % This file is part of Dynare.
 %
@@ -93,3 +93,15 @@ if (any (k))
 end
 
 end
+
+%@test:1
+%$
+%$ x = [-1 0 0.75 1 2];
+%$ dassert (betainv (x, ones (1,5), 2*ones (1,5)), [NaN 0 0.5 1 NaN])
+%$ dassert (betainv (x, 1, 2*ones (1,5)), [NaN 0 0.5 1 NaN])
+%$ dassert (betainv (x, ones (1,5), 2), [NaN 0 0.5 1 NaN])
+%$ dassert (betainv (x, [1 0 NaN 1 1], 2), [NaN NaN NaN 1 NaN])
+%$ dassert (betainv (x, 1, 2*[1 0 NaN 1 1]), [NaN NaN NaN 1 NaN])
+%$ dassert (betainv ([x(1:2) NaN x(4:5)], 1, 2), [NaN 0 NaN 1 NaN])
+%$ T = all(t);
+%@eof:1

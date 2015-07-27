@@ -1,4 +1,4 @@
-function [s,nu] = inverse_gamma_specification(mu,sigma,type,use_fzero_flag)
+function [s,nu] = inverse_gamma_specification(mu,sigma,type,use_fzero_flag) % --*-- Unitary tests --*--
 % Computes the inverse Gamma hyperparameters from the prior mean and standard deviation.
 
 %@info:
