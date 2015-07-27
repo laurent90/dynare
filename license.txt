@@ -93,6 +93,15 @@ Copyright: 1995-2007 Kurt Hornik
            2008-2009 Dynare Team
 License: GPL-3+
 
+Files: matlab/missing/stats/normpdf.m matlab/missing/stats/wblcdf.m
+Files: matlab/missing/stats/normpdf.m matlab/missing/stats/wblinv.m
+Files: matlab/missing/stats/normpdf.m matlab/missing/stats/wblpdf.m
+Files: matlab/missing/stats/normpdf.m matlab/missing/stats/wblrnd.m
+Copyright: 2012 Rik Wehbring
+           1995-2015 Kurt Hornik
+           2015 Dynare Team
+License: GPL-3+
+
 Files: matlab/missing/strjoin/strjoin.m
 Copyright: 2007 Muthiah Annamalai <muthiah.annamalai@uta.edu>
            2013 Dynare Team
