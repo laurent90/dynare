@@ -395,7 +395,7 @@ npred = M_.nspred;             % Number of predetermined variables.
 nspred = M_.nspred;            % Number of predetermined variables in the state equation.
 
 %% Setting resticted state space (observed + predetermined variables)
-oo_.dr.restrict_var_list: location of union of observed and state variables in decision rules (decision rule order)
+% oo_.dr.restrict_var_list: location of union of observed and state variables in decision rules (decision rule order)
 % bayestopt_.mfys: position of observables in oo_.dr.ys (declaration order)
 % bayestopt_.mf2: position of observables in decision rules (decision rule order)
 % bayestopt_.mf0: position of state variables in decision rules (decision rule order)
