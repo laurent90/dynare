@@ -402,7 +402,7 @@ nspred = M_.nspred;            % Number of predetermined variables in the state 
 % bayestopt_.mf1: positions of observed variables in decision rules (decision rule order)
 % bayestopt_.mf2: positions of observed variables in decision rules (decision rule order)
 % bayestopt_.smoother_var_list: positions of observed variables and requested smoothed variables in decision rules (decision rule order)
-% bayestopt_.smoother_saved_var_list: positions of requested smoothed variables in decision rules (decision rule order)
+% bayestopt_.smoother_saved_var_list: positions of requested smoothed variables in bayestopt_.smoother_var_list
 % bayestopt_.smoother_restrict_columns: positions of states in observed variables and requested smoothed variables in decision rules (decision rule order)
 % bayestopt_.smoother_mf: positions of observed variables and requested smoothed variables in decision rules (decision rule order)
 
