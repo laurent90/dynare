@@ -112,17 +112,17 @@ end
 
 %get indices of smoothed variables
 i_endo_in_bayestopt_smoother_varlist = bayestopt_.smoother_saved_var_list;
-i_endo_in_dr=bayestopt_.smoother_var_list(i_endo_in_bayestopt_smoother_varlist);
+i_endo_in_dr_matrices=bayestopt_.smoother_var_list(i_endo_in_bayestopt_smoother_varlist);
 if ~isempty(options_.nk) && options_.nk ~= 0 
     %write deviations from steady state, add constant for observables later
-    oo_.FilteredVariablesKStepAhead = aK(options_.filter_step_ahead,i_endo_in_dr,:);    
+    oo_.FilteredVariablesKStepAhead = aK(options_.filter_step_ahead,i_endo_in_dr_matrices,:);    
     if ~isempty(PK) %get K-step ahead variances
         oo_.FilteredVariablesKStepAheadVariances = ...
-            PK(options_.filter_step_ahead,i_endo_in_dr,i_endo_in_dr,:);
+            PK(options_.filter_step_ahead,i_endo_in_dr_matrices,i_endo_in_dr_matrices,:);
     end
     if ~isempty(decomp) %get decomposition
         oo_.FilteredVariablesShockDecomposition = ...
-            decomp(options_.filter_step_ahead,i_endo_in_dr,:,:);
+            decomp(options_.filter_step_ahead,i_endo_in_dr_matrices,:,:);
     end
 end
 
@@ -154,7 +154,7 @@ for pos_iter=1:length(bayestopt_.mf)
                 +trend_constant_observables_filtered.filter_ahead_1(pos_iter,:)';
             for filter_iter=1:length(options_.filter_step_ahead)
                 filter_step=options_.filter_step_ahead(filter_iter);
-                oo_.FilteredVariablesKStepAhead(filter_iter,bayestopt_.mf(pos_iter),1+filter_step:end-(max(options_.filter_step_ahead)-filter_step)) = ...
+                oo_.FilteredVariablesKStepAhead(filter_iter,find(i_endo_in_dr_matrices==bayestopt_.mf(pos_iter)),1+filter_step:end-(max(options_.filter_step_ahead)-filter_step)) = ...
                     squeeze(aK(filter_step,bayestopt_.mf(pos_iter),1+filter_step:end-(max(options_.filter_step_ahead)-filter_step)))...
                     +trend_constant_observables_filtered.(['filter_ahead_' num2str(filter_step)])(pos_iter,:)';    
             end
