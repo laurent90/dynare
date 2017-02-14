@@ -467,13 +467,13 @@ deterministic_simulations/multiple_lead_lags/sim_lead_lag.o.trs: deterministic_s
 deterministic_simulations/multiple_lead_lags/ramst_augmented_histval.m.trs: ramst.m.trs 
 deterministic_simulations/multiple_lead_lags/ramst_augmented_histval.o.trs: ramst.o.trs
 
-loglinear/example4_loglinear.m.trs: loglinear/example4_exp.m.trs 
-loglinear/example4_loglinear.o.trs: loglinear/example4_exp.o.trs 
+loglinear/example4_loglinear.m.trs: loglinear/example4_exp.m.trs
+loglinear/example4_loglinear.o.trs: loglinear/example4_exp.o.trs
 loglinear/example4_loglinear_lagged_exogenous_a.m.trs: loglinear/example4_loglinear_lagged_exogenous.m.trs 
 loglinear/example4_loglinear_lagged_exogenous_a.o.trs: loglinear/example4_loglinear_lagged_exogenous.o.trs 
 
-loglinear/example4_loglinear_histval.m.trs: loglinear/example4_exp_histval.m.trs 
-loglinear/example4_loglinear_histval.o.trs: loglinear/example4_exp_histval.o.trs 
+loglinear/example4_loglinear_histval.m.trs: loglinear/example4_exp_histval.m.trs
+loglinear/example4_loglinear_histval.o.trs: loglinear/example4_exp_histval.o.trs
 
 observation_trends_and_prefiltering/ML/Trend_loglinear_no_prefilter_first_obs.m.trs: observation_trends_and_prefiltering/ML/Trend_loglinear_no_prefilter.m.trs
 observation_trends_and_prefiltering/ML/Trend_loglinear_no_prefilter_first_obs.o.trs: observation_trends_and_prefiltering/ML/Trend_loglinear_no_prefilter.o.trs
@@ -972,6 +972,8 @@ clean-local:
 	rm -f estimation/test_matrix.mat
 
 	rm -f initval_file/ramst_initval_file_data_col_vec_mat.mat initval_file/ramst_initval_file_data_row_vec_mat.mat initval_file/ramst_initval_file_excel.xls
+
+	rm -f loglinear/results_exp_histval.mat loglinear/results_exp.mat
 
 	find . -name "*.tex" -type f -delete
 	find . -name "*.aux" -type f -delete
