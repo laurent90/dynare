@@ -80,7 +80,7 @@ switch task
         end
     else
         if options.loglinear
-            y0 = log_variable(1:M_.endo_nbr,M_.endo_histval,M_);
+            y0 = log_variable(1:M.endo_nbr,M.endo_histval,M);
         else
             y0 = M.endo_histval;
         end
